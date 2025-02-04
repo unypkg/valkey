@@ -35,7 +35,7 @@ mkdir -pv /uny/sources
 cd /uny/sources || exit
 
 pkgname="valkey"
-pkggit="https://github.com/valkey/valkey.git refs/tags/*"
+pkggit="https://github.com/valkey-io/valkey.git refs/tags/*"
 gitdepth="--depth=1"
 
 ### Get version info from git remote
