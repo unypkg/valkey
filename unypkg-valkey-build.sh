@@ -11,7 +11,7 @@ set -vx
 wget -qO- uny.nu/pkg | bash -s buildsys
 
 ### Installing build dependencies
-#unyp install python expat openssl
+unyp install openssl systemd
 
 #pip3_bin=(/uny/pkg/python/*/bin/pip3)
 #"${pip3_bin[0]}" install --upgrade pip
@@ -77,12 +77,21 @@ get_include_paths
 
 unset LD_RUN_PATH
 
-./configure \
-    --prefix=/uny/pkg/"$pkgname"/"$pkgver"
+export CFLAGS=""
+export CXXFLAGS="${CFLAGS}"
 
-make -j"$(nproc)"
-make -j"$(nproc)" check 
-make -j"$(nproc)" install
+make PREFIX=/uny/pkg/"$pkgname"/"$pkgver" USE_SYSTEMD=yes MALLOC=jemalloc BUILD_TLS=yes -j"$(nproc)"
+make -j"$(nproc)" test
+make PREFIX=/uny/pkg/"$pkgname"/"$pkgver" -j"$(nproc)" install
+
+cp -a utils /uny/pkg/"$pkgname"/"$pkgver"
+sed "s|/usr/local|/uny/pkg/"$pkgname"/"$pkgver"|g" -i /uny/pkg/"$pkgname"/"$pkgver"/utils/systemd-valkey_server.service
+sed "s|/usr/local|/uny/pkg/"$pkgname"/"$pkgver"|g" -i /uny/pkg/"$pkgname"/"$pkgver"/utils/systemd-valkey_multiple_servers@.service
+
+mkdir /uny/pkg/"$pkgname"/"$pkgver"/etc
+cp -a valkey.conf /uny/pkg/"$pkgname"/"$pkgver"/etc/
+sed "s|# supervised auto|supervised auto|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
+sed "s|dir ./|dir /var/lib/valkey|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
 
 ####################################################
 ### End of individual build script
