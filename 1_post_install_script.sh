@@ -14,6 +14,7 @@ mkdir -pv /etc/uny/valkey
 cp -a etc/valkey.conf /etc/uny/valkey/
 
 mkdir -pv /var/lib/valkey
+mkdir -pv /var/log/valkey
 
 cp -a utils/systemd-valkey_server.service /etc/systemd/system/uny-valkey-server.service
 sed "s|--supervised systemd --daemonize no|/etc/uny/valkey/valkey.conf|" -i /etc/systemd/system/uny-valkey-server.service
