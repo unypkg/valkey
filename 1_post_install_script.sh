@@ -16,9 +16,9 @@ cp -a etc/valkey.conf /etc/uny/valkey/
 mkdir -pv /var/lib/valkey
 mkdir -pv /var/log/valkey
 
-cp -a utils/systemd-valkey_server.service /etc/systemd/system/uny-valkey-server.service
-sed "s|--supervised systemd --daemonize no|/etc/uny/valkey/valkey.conf|" -i /etc/systemd/system/uny-valkey-server.service
-sed -e '/\[Install\]/a\' -e 'Alias=valkey-server.service valkey.service' -i /etc/systemd/system/uny-valkey-server.service
+cp -a utils/systemd-valkey_server.service /etc/systemd/system/uny-valkey.service
+sed "s|--supervised systemd --daemonize no|/etc/uny/valkey/valkey.conf|" -i /etc/systemd/system/uny-valkey.service
+sed -e '/\[Install\]/a\' -e 'Alias=valkey-server.service valkey.service vk.service' -i /etc/systemd/system/uny-valkey.service
 systemctl daemon-reload
 
 #############################################################################################
