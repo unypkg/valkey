@@ -23,7 +23,7 @@ sed "s|--supervised systemd --daemonize no|/etc/uny/valkey/valkey.conf|" -i /etc
 sed -e '/\[Install\]/a\' -e 'Alias=valkey-server.service valkey.service vk.service' -i /etc/systemd/system/uny-valkey.service
 systemctl daemon-reload
 systemctl enable uny-valkey
-systemctl start uny-valkey
+systemctl restart uny-valkey
 
 #############################################################################################
 ### End of script
