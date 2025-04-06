@@ -11,7 +11,9 @@ cd "$unypkg_root_dir" || exit
 ### Start of script
 
 mkdir -pv /etc/uny/valkey
-cp -a etc/valkey.conf /etc/uny/valkey/
+if [[ ! -s /etc/uny/valkey/valkey.conf ]]; then
+    cp -a etc/valkey.conf /etc/uny/valkey/
+fi
 
 mkdir -pv /var/lib/valkey
 mkdir -pv /var/log/valkey

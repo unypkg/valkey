@@ -86,7 +86,7 @@ make PREFIX=/uny/pkg/"$pkgname"/"$pkgver" -j"$(nproc)" install
 
 cp -a utils /uny/pkg/"$pkgname"/"$pkgver"
 sed "s|/usr/local|/uny/pkg/"$pkgname"/"$pkgver"|g" -i /uny/pkg/"$pkgname"/"$pkgver"/utils/systemd-valkey_server.service
-sed -e '/\[Service\]/a\' -e 'RuntimeDirectory=valkey' -i /uny/pkg/"$pkgname"/"$pkgver"/utils/systemd-valkey_server.service
+sed -e '/^\[Service\]/a\' -e 'RuntimeDirectory=valkey' -i /uny/pkg/"$pkgname"/"$pkgver"/utils/systemd-valkey_server.service
 sed "s|/usr/local|/uny/pkg/"$pkgname"/"$pkgver"|g" -i /uny/pkg/"$pkgname"/"$pkgver"/utils/systemd-valkey_multiple_servers@.service
 
 mkdir /uny/pkg/"$pkgname"/"$pkgver"/etc
@@ -94,6 +94,8 @@ cp -a valkey.conf /uny/pkg/"$pkgname"/"$pkgver"/etc/
 sed "s|# supervised auto|supervised auto|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
 sed "s|dir ./|dir /var/lib/valkey|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
 sed "s|/run/|/run/valkey/|g" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
+sed "s|^pidfile.*|pidfile /run/valkey/valkey.pid|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
+sed "s|# unixsocket .*|unixsocket /run/valkey/valkey.sock|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
 
 ####################################################
 ### End of individual build script
