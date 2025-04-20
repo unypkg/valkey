@@ -96,6 +96,8 @@ sed "s|dir ./|dir /var/lib/valkey|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.
 sed "s|/run/|/run/valkey/|g" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
 sed "s|^pidfile.*|pidfile /run/valkey/valkey.pid|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
 sed "s|# unixsocket .*|unixsocket /run/valkey/valkey.sock|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
+sed "s|# unixsocketperm .*|unixsocketperm 770|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
+sed "s|# unixsocketgroup .*|unixsocketgroup unyweb|" -i /uny/pkg/"$pkgname"/"$pkgver"/etc/valkey.conf
 
 ####################################################
 ### End of individual build script
